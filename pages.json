@@ -1,0 +1,110 @@
+{
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+				// "onReachBottomDistance": 150,  上拉加载更多 和onReachBottom()配套使用
+				// "enablePullDownRefresh": true,  下拉刷新 和onPullDownRefresh()配套使用
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "福师大智慧体育云平台",
+				"navigationBarBackgroundColor": "#8364f2",
+				"navigationBarTextStyle": "#fff"
+			}
+		}, {
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false
+			}
+
+		}
+	],
+	"subPackages": [{
+		"root": "pages_other",
+		"pages": [{
+				"path": "teacher-say/teacher-say",
+				"style": {
+					"navigationBarTitleText": "教师评价",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "coursse-details/coursse-details",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "colleges/colleges",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}
+
+
+			, {
+				"path": "students/students",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "student-details/student-details",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}
+		    ,{
+                    "path" : "student-add/student-add",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "college-detail/college-detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+	}],
+	"tabBar": {
+		"color": "#ccc",
+		"selectedColor": "#5f4fde",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"text": "首页",
+			"iconPath": "static/index_f.png",
+			"selectedIconPath": "static/index_t.png"
+		}, {
+			"pagePath": "pages/user/user",
+			"text": "个人中心",
+			"iconPath": "static/user_f.png",
+			"selectedIconPath": "static/user_t.png"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+}
