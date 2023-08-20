@@ -1,7 +1,7 @@
 import vue from '@/main.js'
 
 
-const commoneUrl = "https://fjrcsx.com:8080/wxapi"; //公共路径 
+const commoneUrl = "http://120.76.132.152:8091/wxapi"; //公共路径 
 
 //post请求封装
 function postRequest(url, data) {
@@ -11,10 +11,10 @@ function postRequest(url, data) {
 			data = {}
 		}
 		var postData = data;
-		if (uni.getStorageSync('userTel')) {
-			//如果本地保存了登陆状态(如手机号)  提供默认传参方式
-			// postData['userid'] = uni.getStorageSync('userinfo').id
-		}
+		// if (uni.getStorageSync('userTel')) {
+		// 	//如果本地保存了登陆状态(如手机号)  提供默认传参方式
+		// 	// postData['userid'] = uni.getStorageSync('userinfo').id
+		// }
 		uni.request({
 			url: commoneUrl + url,
 			data: postData,
@@ -24,10 +24,17 @@ function postRequest(url, data) {
 			// jsonpCallback:"success_jsonpCallback",
 			header: {
 				'content-type': 'application/json;charset=UTF-8',
-				// 'token': uni.getStorageSync('token')
+				'Authorization': uni.getStorageSync('token')
 				//token可以不要，看后端
 			},
 			success: function(res) {
+				if (res.data.code === 401) {
+					uni.removeStorageSync('token')
+					uni.redirectTo({
+						url: '/pages/login/login'
+					});
+					return
+				}
 				resolve(res.data);
 			},
 			fail: function(e) {
@@ -41,26 +48,25 @@ function postRequest(url, data) {
 //get请求封装
 function getRequest(url, data) {
 	var promise = new Promise((resolve, reject) => {
-		//data不存在 返回一个空对象
-		if (!data) {
-			data = {}
-		}
-		var postData = data;
-		if (uni.getStorageSync('userTel')) {
-			//如果本地保存了登陆状态(如手机号)  提供默认传参方式
-			// postData['userid'] = uni.getStorageSync('userinfo').id
-		}
 		uni.request({
 			url: commoneUrl + url,
-			data: postData,
+			data: data,
 			method: "GET",
 			dataType: 'json',
 			header: {
 				'content-type': 'application/json',
-				// 'token': uni.getStorageSync('token')
+				'Authorization': uni.getStorageSync('token')
 				// 'user-token': uni.getStorageSync('userinfo').token
 			},
 			success: function(res) {
+				if (res.data.code === 401 || res.data
+					.code === 403) {
+					uni.removeStorageSync('token')
+					uni.redirectTo({
+						url: '/pages/login/login'
+					});
+					return
+				}
 				resolve(res.data);
 			},
 			fail: function(e) {
@@ -89,10 +95,17 @@ function putRequest(url, data, heads) {
 			dataType: 'json',
 			header: {
 				'content-type': 'application/json',
-				// 'token': uni.getStorageSync('token')
-				// 'user-token': uni.getStorageSync('userinfo').token
+				'Authorization': uni.getStorageSync('token')
 			},
 			success: function(res) {
+				if (res.data.code === 401 || res.data
+					.code === 403) {
+					uni.removeStorageSync('token')
+					uni.redirectTo({
+						url: '/pages/login/login'
+					});
+					return
+				}
 				resolve(res.data);
 			},
 			fail: function(e) {
@@ -121,10 +134,17 @@ function delRequest(url, data) {
 			dataType: 'json',
 			header: {
 				'content-type': 'application/json',
-				// 'token': uni.getStorageSync('token')
-				// 'user-token': uni.getStorageSync('userinfo').token
+				'Authorization': uni.getStorageSync('token')
 			},
 			success: function(res) {
+				if (res.data.code === 401 || res.data
+					.code === 403) {
+					uni.removeStorageSync('token')
+					uni.redirectTo({
+						url: '/pages/login/login'
+					});
+					return
+				}
 				resolve(res.data);
 			},
 			fail: function(e) {

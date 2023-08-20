@@ -14,7 +14,8 @@
         "students/students",
         "student-details/student-details",
         "student-add/student-add",
-        "college-detail/college-detail"
+        "college-detail/college-detail",
+        "user-info/user-info"
       ]
     }
   ],

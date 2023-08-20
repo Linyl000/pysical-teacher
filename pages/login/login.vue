@@ -1,22 +1,46 @@
 <template>
 	<view class="page">
-		<view class="input_1"><u--input placeholder="请输入账号" v-model="value" @change="change" border="none" fontSize="18"></u--input></view>
+		<view class="input_1"><u--input placeholder="请输入账号" v-model="username" border="none" fontSize="18"></u--input></view>
 		<view class="input_1">
-			<u--input placeholder="请输入密码" v-model="value2" @change="change" border="none" fontSize="18"></u--input>
+			<u--input placeholder="请输入密码" v-model="password" border="none" fontSize="18" :password="pwd">
+				<template slot="suffix">
+					<u-icon :name="pwd ? 'eye-off' : 'eye'" size="33" @click="pwd = !pwd"></u-icon>
+				</template>
+			</u--input>
 		</view>
-		<view class="button_1" @click="toIndex">登录</view>
+		<view class="button_1" @click="goIndex">登录</view>
 	</view>
 </template>
-
 <script>
+import { login } from '@/api/login.js';
 export default {
 	data() {
-		return {};
+		return {
+			username: 'tea001',
+			password: '123456',
+			pwd: true,
+			codeUrl: null,
+			uuid: null,
+			captchaEnabled: null
+		};
 	},
 	methods: {
-		toIndex() {
-			uni.switchTab({
-				url: '/pages/index/index'
+		goIndex() {
+			if (!this.username || !this.password) {
+				uni.showToast({
+					duration: 2000,
+					title: '账号或密码不能为空',
+					icon: 'none'
+				});
+				return;
+			}
+			login({ username: this.username, password: this.password }).then(res => {
+				if (res.code === 200) {
+					uni.setStorageSync('token', res.token);
+					uni.switchTab({
+						url: '/pages/index/index'
+					});
+				}
 			});
 		}
 	}

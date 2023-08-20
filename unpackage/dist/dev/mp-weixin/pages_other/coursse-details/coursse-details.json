@@ -3,6 +3,7 @@
   "enablePullDownRefresh": false,
   "usingComponents": {
     "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
+    "qiun-data-charts": "/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts",
     "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs"
   }
 }

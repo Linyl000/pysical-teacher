@@ -1,11 +1,11 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
-		<view class="name">【作业/考核】太极八法五步-第六式</view>
-		<view class="people">八段锦-xx学院(xx人)</view>
+		<view class="name">【{{ i.type === 0 ? '作业' : '考核' }}】{{ i.taskName }}</view>
+		<view class="people">{{ i.deptName }}({{ i.allNum }}人)</view>
 		<view class="chart-box">
-			<view class="completes">本次作业/考核完成率</view>
-			<div class="charts">1111</div>
-			<view class="ok-number">30/60人已完成</view>
+			<view class="completes">本次{{ i.type === 0 ? '作业' : '考核' }}完成率</view>
+			<div class="charts"><qiun-data-charts type="pie" :chartData="chartsDataPie1" :echartsH5="true" :echartsApp="true" /></div>
+			<view class="ok-number">{{ i.finishNum }}/{{ i.allNum }}人已完成</view>
 		</view>
 		<u-tabs
 			lineColor="#5d4fdc"
@@ -18,6 +18,7 @@
 				fontWeight: 'bold'
 			}"
 			lineHeight="5"
+			@change="tabChange"
 		></u-tabs>
 		<div class="type">
 			<div class="small-colum">
@@ -25,23 +26,24 @@
 				<div>学号</div>
 				<div>成绩</div>
 			</div>
-			<div class="small-colum" v-for="i in 10" :key="i">
+			<div class="small-colum" v-for="i in list" :key="i">
 				<div>
-					<image src="../../static/logout.png" style="width: 60rpx;height: 60rpx;vertical-align: middle;margin-right: 10rpx;"></image>
-					111
+					<image :src="i.avatar" style="width: 50rpx;height: 50rpx;vertical-align: middle;"></image>
+					{{ i.nickName }}
 				</div>
-				<div>222</div>
-				<!-- <div>未完成</div> -->
-				<div>
-					<span class="score">4444</span>
-					<span class="colums">分</span>
+				<div>{{ i.studentNo }}</div>
+				<div v-if="i.finishStatus !== '0'">
+					<span class="score">{{ i.workScore === -1 ? '评分中' : i.workScore === -2 ? '成绩出错，请后台修改' : i.workScore }}</span>
+					<span v-if="i.workScore > -1" class="colums">分</span>
 				</div>
+				<div v-else class="score">未完成</div>
 			</div>
 		</div>
 	</z-paging>
 </template>
 
 <script>
+import { teacherSelectStuWork } from '@/api/coursse-details.js';
 export default {
 	data() {
 		return {
@@ -53,16 +55,45 @@ export default {
 					name: '未完成'
 				}
 			],
-			current: 0,
-			list: []
+			type: 0,
+			list: [],
+			i: null,
+			chartsDataPie1: []
 		};
 	},
-	onLoad() {
-		this.getList();
+	onLoad(option) {
+		this.i = JSON.parse(option.i);
+		this.chartsDataPie1 = {
+			series: [
+				{
+					data: [
+						{
+							name: '已完成',
+							value: this.i.finishNum
+						},
+						{
+							name: '未完成',
+							value: this.i.allNum - this.i.finishNum
+						}
+					]
+				}
+			]
+		};
 	},
 	methods: {
 		getList(pageNo, pageSize) {
-			//
+			this.type = this.type === 1 ? 0 : 1;
+			teacherSelectStuWork({ taskId: this.i.id, deptId: this.i.deptId, finishStatus: this.type })
+				.then(res => {
+					this.list = res.data;
+					this.$refs.paging.complete(res.data);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
+		},
+		tabChange({ index }) {
+			this.$refs.paging.reload();
 		}
 	}
 };
@@ -98,7 +129,7 @@ export default {
 		width: 450rpx;
 		height: 450rpx;
 		margin: 26rpx auto;
-		background-color: pink;
+		// background-color: pink;
 	}
 	.ok-number {
 		text-align: center;

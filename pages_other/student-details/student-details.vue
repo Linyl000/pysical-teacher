@@ -1,48 +1,51 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
-		<view class="block_5">
-			<image
-				src="https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/c5b841efbf714a2cb7f869bcda97adb7_mergeImage.png"
-				class="image_3"
-			></image>
-			<view class="text-group_5">
-				<text lines="1" class="text_3">杜若</text>
-				<text lines="1" class="text_4">大数据二班</text>
+		<template #top>
+			<view class="block_5">
+				<image :src="i.avatar" class="image_3"></image>
+				<view class="text-group_5">
+					<text lines="1" class="text_3">{{ i.nickName }}</text>
+					<text lines="1" class="text_4">{{ i.studentNo }}</text>
+				</view>
 			</view>
-		</view>
-		<u-tabs
-			lineColor="#5d4fdc"
-			:list="list1"
-			lineWidth="40"
-			:itemStyle="{
-				height: '100rpx'
-			}"
-			:activeStyle="{
-				fontWeight: 'bold'
-			}"
-			lineHeight="5"
-		></u-tabs>
+			<u-tabs
+				lineColor="#5d4fdc"
+				:list="list1"
+				lineWidth="40"
+				:itemStyle="{
+					height: '100rpx'
+				}"
+				:activeStyle="{
+					fontWeight: 'bold'
+				}"
+				lineHeight="5"
+				@change="tabChange"
+			></u-tabs>
+		</template>
 		<div class="type">
 			<div class="small-colum">
 				<div>时间</div>
 				<div>题目名称</div>
 				<div>成绩</div>
 			</div>
-			<div class="small-colum" v-for="i in 10" :key="i">
-				<div>111/22/11</div>
-				<div>八段锦第一节</div>
-				<!-- <div>未完成</div> -->
-				<div>
-					<span class="score">4444</span>
-					<span class="colums">分</span>
+			<div class="small-colum" v-for="i in list" :key="i.taskId">
+				<div>{{ i.endTime }}</div>
+				<div>{{ i.taskName }}</div>
+				<div v-if="i.finishStatus !== '0'">
+					<span class="score">{{ i.workScore === -1 ? '评分中' : i.workScore === -2 ? '成绩出错，请后台修改' : i.workScore }}</span>
+					<span v-if="i.workScore > -1" class="colums">分</span>
 				</div>
+				<div v-else class="score">未完成</div>
 			</div>
 		</div>
-		<view class="button_1" @click="goBack">返回</view>
+		<template #bottom>
+			<view class="button_1" @click="goBack">返回</view>
+		</template>
 	</z-paging>
 </template>
 
 <script>
+import { result } from '@/api/student-details.js';
 export default {
 	data() {
 		return {
@@ -54,16 +57,31 @@ export default {
 					name: '考核情况'
 				}
 			],
-			current: 0,
-			list: []
+			type: 0,
+			list: [],
+			i: null
 		};
 	},
-	onLoad() {
-		this.getList();
+	onLoad(option) {
+		this.i = JSON.parse(option.i);
 	},
 	methods: {
+		getList() {
+			result({ studentId: this.i.userId, taskType: this.type })
+				.then(res => {
+					this.list = res.rows;
+					this.$refs.paging.complete(res.rows);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
+		},
 		goBack() {
 			uni.navigateBack({});
+		},
+		tabChange({ index }) {
+			this.type = index;
+			this.$refs.paging.reload();
 		}
 	}
 };

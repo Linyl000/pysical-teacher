@@ -1,28 +1,48 @@
 <template>
-	<view class="page" style="background-color: #f8f8f8;">
+	<z-paging
+		ref="paging"
+		loading-more-no-more-text="THE END"
+		v-model="list"
+		@query="getList"
+		class="page"
+		style="background-color: #f8f8f8;"
+	>
 		<u-cell-group>
 			<u-cell
-				v-for="i in 10"
-				:key="i"
+				v-for="i in list"
+				:key="i.deptId"
 				icon="../../../../../../../../../static/teachersay.png"
-				:title="'xx学院'"
-				:label="'人'"
+				:title="i.deptName"
+				:label="i.orderNum + '人'"
 				:isLink="true"
-				@click="goCollegeDetail"
+				@click="goStudents(i)"
 			></u-cell>
 		</u-cell-group>
-	</view>
+	</z-paging>
 </template>
 
 <script>
+import { dept } from '@/api/colleges.js';
 export default {
 	data() {
-		return {};
+		return {
+			list: []
+		};
 	},
 	methods: {
-		goCollegeDetail() {
+		getList() {
+			dept()
+				.then(res => {
+					this.list = res.data;
+					this.$refs.paging.complete(res.data);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
+		},
+		goStudents(i) {
 			uni.navigateTo({
-				url: '/pages_other/college-detail/college-detail'
+				url: '/pages_other/students/students?i=' + JSON.stringify(i)
 			});
 		}
 	}

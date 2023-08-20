@@ -1,10 +1,12 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
-		<view class="hello">
-			<text lines="1">Hello，</text>
-			<text lines="1" style="color: #5d4fdc;">王佳</text>
-			<text lines="1" style="font-size: 32rpx;">老师</text>
-		</view>
+		<template #top>
+			<view class="hello">
+				<text lines="1">Hello，</text>
+				<text lines="1" style="color: #5d4fdc;">{{ user.nickName }}</text>
+				<text lines="1" style="font-size: 32rpx;">老师</text>
+			</view>
+		</template>
 		<!-- 		<view class="search-box"><u-search placeholder="搜索课程成绩" v-model="keyword"></u-search></view> -->
 		<view class="options">
 			<!-- <view class="options-item">
@@ -20,7 +22,6 @@
 				<text lines="1" style="font-weight: 600;">学生管理</text>
 			</view>
 		</view>
-
 		<u-tabs
 			lineColor="#5d4fdc"
 			:list="list1"
@@ -32,24 +33,27 @@
 				fontWeight: 'bold'
 			}"
 			lineHeight="5"
+			@change="tabChange"
 		></u-tabs>
-		<view class="list-item" v-for="(item, index) in 10" :key="item" @click="goCourseDetails">
+		<view class="list-item" v-for="(item, index) in list" :key="item.id" @click="goCourseDetails(item)">
 			<div class="top">
-				<view lines="1" style="font-weight: 600;">最多十个字符你记住…</view>
+				<view lines="1" style="font-weight: 600;">{{ item.taskName }}</view>
 				<view class="right-score">
 					<text>完成率：</text>
-					<text style="color: #e57d7d;">88%</text>
+					<text style="color: #e57d7d;">{{ item.finishRate }}</text>
 				</view>
 			</div>
 			<div class="top">
-				<view class="classes">23/02/22-八段锦-xx学院</view>
-				<view style="color: #888888;">30/60人已完成</view>
+				<view class="classes">{{ item.createTime }}&nbsp;{{ item.deptName }}</view>
+				<view style="color: #888888;">{{ item.finishNum }}/{{ item.allNum }}人已完成</view>
 			</div>
 		</view>
 	</z-paging>
 </template>
 
 <script>
+import { getInfo } from '@/api/user.js';
+import { workList } from '@/api/index.js';
 export default {
 	data() {
 		return {
@@ -61,16 +65,29 @@ export default {
 					name: '考核列表'
 				}
 			],
-			current: 0,
-			list: []
+			type: 0,
+			list: [],
+			user: null
 		};
 	},
 	onLoad() {
-		this.getList();
+		this.getInfo();
 	},
 	methods: {
-		getList(pageNo, pageSize) {
-			//
+		getList(page, limit) {
+			workList({ pageNo: page, pageSize: limit, taskType: this.type })
+				.then(res => {
+					this.list = res.rows;
+					this.$refs.paging.complete(res.rows);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
+		},
+		getInfo() {
+			getInfo().then(res => {
+				this.user = res.user;
+			});
 		},
 		goColleges() {
 			uni.navigateTo({
@@ -82,10 +99,15 @@ export default {
 				url: '/pages_other/students/students'
 			});
 		},
-		goCourseDetails() {
+		goCourseDetails(i) {
+			i.type = this.type;
 			uni.navigateTo({
-				url: '/pages_other/coursse-details/coursse-details'
+				url: '/pages_other/coursse-details/coursse-details?i=' + JSON.stringify(i)
 			});
+		},
+		tabChange({ index }) {
+			this.type = index;
+			this.$refs.paging.reload();
 		}
 	}
 };

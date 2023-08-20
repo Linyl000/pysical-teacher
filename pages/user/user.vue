@@ -2,37 +2,64 @@ s
 <template>
 	<view class="page">
 		<view class="teacher-info">
-			<image class="ava" src="@/static/user_f.png"></image>
+			<image class="ava" :src="list.avatar"></image>
 			<view class="teacher-des">
-				<view lines="1" class="name">王佳老师</view>
-				<view lines="1" class="school">吉林大学</view>
+				<view lines="1" class="name">
+					{{ list.nickName }}老师
+					<u-icon name="edit-pen" color="#fff" size="28" @click="goUserInfo"></u-icon>
+				</view>
+				<view lines="1" class="school">{{ list.deptName }}</view>
 			</view>
 		</view>
 		<div class="section2">
 			<u-cell-group>
 				<u-cell icon="../../../../../../../../../static/teachersay.png" title="教师评价" :isLink="true" @click="goTeacherSay"></u-cell>
 
-				<u-cell icon="../../../../../../../../../static/logout.png" title="退出" :isLink="true" @click="logout"></u-cell>
+				<u-cell icon="../../../../../../../../../static/logout.png" title="退出" :isLink="true" @click="showByeBye = true"></u-cell>
 			</u-cell-group>
 		</div>
+		<!-- 注销框 -->
+		<u-modal
+			:show="showByeBye"
+			title="退出"
+			content="点击确认退出当前账号"
+			@confirm="logout"
+			showCancelButton
+			@cancel="showByeBye = false"
+			confirmColor="#8e6af8"
+		></u-modal>
 	</view>
 </template>
 
 <script>
+import { getInfo } from '@/api/user.js';
 export default {
 	data() {
-		return {};
+		return { list: null, showByeBye: false };
 	},
-	onLoad() {},
+	onLoad() {
+		this.getInfo();
+	},
 	methods: {
 		goTeacherSay() {
 			uni.navigateTo({
 				url: '/pages_other/teacher-say/teacher-say'
 			});
 		},
+		getInfo() {
+			getInfo().then(res => {
+				this.list = res.user;
+			});
+		},
 		logout() {
-			uni.switchTab({
+			uni.removeStorageSync('token');
+			uni.redirectTo({
 				url: '/pages/login/login'
+			});
+		},
+		goUserInfo() {
+			uni.navigateTo({
+				url: '/pages_other/user-info/user-info'
 			});
 		}
 	}
@@ -64,8 +91,9 @@ export default {
 		color: #fff;
 	}
 	.name {
+		display: flex;
 		font-size: 48rpx;
-		text-align: center;
+		justify-content: center;
 		font-weight: 600;
 		margin-bottom: 16rpx;
 	}

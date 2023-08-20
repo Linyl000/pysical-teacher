@@ -1,22 +1,23 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
-		<div class="say-items" v-for="i in 10" :key="i">
+		<div class="say-items" v-for="i in list" :key="i.userId">
 			<image class="ava" src="../../static/logout.png"></image>
 			<div class="text">
 				<div class="title">
-					<div class="name">111</div>
+					<div class="name">匿名用户</div>
 					<div class="score">
-						99
+						{{ i.score }}
 						<text style="font-size: 32rpx;">分</text>
 					</div>
 				</div>
-				<div class="says">xxx</div>
+				<div class="says">{{ i.evaluateContent }}</div>
 			</div>
 		</div>
 	</z-paging>
 </template>
 
 <script>
+import { evaluate } from '@/api/teacher-say.js';
 export default {
 	data() {
 		return {
@@ -25,7 +26,14 @@ export default {
 	},
 	methods: {
 		getList(pageNo, pageSize) {
-			//
+			evaluate()
+				.then(res => {
+					this.list = res.data;
+					this.$refs.paging.complete(res.data);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
 		}
 	}
 };

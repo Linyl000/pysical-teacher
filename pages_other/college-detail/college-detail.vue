@@ -3,8 +3,8 @@
 		<u-cell-group>
 			<u-cell
 				icon="../../../../../../../../../static/teachersay.png"
-				:title="'xx学院'"
-				:label="'人'"
+				:title="i.deptName"
+				:label="i.orderNum + '人'"
 				:isLink="true"
 				@click="goStudents"
 			></u-cell>
@@ -32,10 +32,10 @@ font-size: 48rpx;padding: 26rpx 0;"
 				</div>
 			</div>
 		</view>
-		<view class="chart-box">
+		<!-- <view class="chart-box">
 			<view class="completes">平均作业/考核完成率</view>
 			<div class="charts">1111</div>
-		</view>
+		</view> -->
 		<u-tabs
 			lineColor="#5d4fdc"
 			:list="list1"
@@ -70,6 +70,7 @@ font-size: 48rpx;padding: 26rpx 0;"
 </template>
 
 <script>
+import { deptStuList } from '@/api/students.js';
 export default {
 	data() {
 		return {
@@ -79,11 +80,12 @@ export default {
 				}
 			],
 			current: 0,
-			list: []
+			list: [],
+			i: null
 		};
 	},
-	onLoad() {
-		this.getList();
+	onLoad(option) {
+		this.i = JSON.parse(option.i);
 	},
 	methods: {
 		getList(pageNo, pageSize) {
@@ -91,7 +93,7 @@ export default {
 		},
 		goStudents() {
 			uni.navigateTo({
-				url: '/pages_other/students/students'
+				url: '/pages_other/students/students?i=' + JSON.stringify(this.i)
 			});
 		}
 	}

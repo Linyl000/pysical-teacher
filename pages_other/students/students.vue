@@ -9,39 +9,49 @@
 	>
 		<view class="search-box">
 			<u-search placeholder="搜索学生学号或姓名" v-model="keyword"></u-search>
-			<u-icon name="plus-circle" size="24" @click="goStudentAdd"></u-icon>
+			<!-- <u-icon name="plus-circle" size="24" @click="goStudentAdd"></u-icon> -->
 		</view>
 		<div class="type">
 			<div class="small-colum">
 				<div>学生姓名</div>
 				<div>学号</div>
 			</div>
-			<div class="small-colum" v-for="i in 10" :key="i" @click="goStudentDetails">
-				<div>
-					<image src="../../static/logout.png" style="width: 60rpx;height: 60rpx;vertical-align: middle;margin-right: 10rpx;"></image>
-					111
+			<div class="small-colum" v-for="i in list" :key="i.userId" @click="goStudentDetails(i)">
+				<div style="flex: 1;text-align:left;">
+					<image :src="i.avatar" style="width: 60rpx;height: 60rpx;vertical-align: middle;margin-right: 10rpx;"></image>
+					{{ i.nickName }}
 				</div>
-				<div>222</div>
+				<div>{{ i.studentNo }}</div>
+				tv
 			</div>
 		</div>
 	</z-paging>
 </template>
 
 <script>
+import { deptStuList } from '@/api/students.js';
 export default {
 	data() {
-		return { list: [] };
+		return { list: [], i: null, keyword: '' };
 	},
-	onLoad() {
-		this.getList();
+	onLoad(option) {
+		this.i = option.i ? JSON.parse(option.i) : '';
+		console.log(this.i);
 	},
 	methods: {
 		getList(pageNo, pageSize) {
-			//
+			deptStuList({ deptId: this.i.deptId ? this.i.deptId : '', keyword: this.keyword })
+				.then(res => {
+					this.list = res.data;
+					this.$refs.paging.complete(res.data);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
 		},
-		goStudentDetails() {
+		goStudentDetails(i) {
 			uni.navigateTo({
-				url: '/pages_other/student-details/student-details'
+				url: '/pages_other/student-details/student-details?i=' + JSON.stringify(i)
 			});
 		},
 		goStudentAdd() {

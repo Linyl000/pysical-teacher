@@ -82,6 +82,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "user-info/user-info",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 	}],
 	"tabBar": {
