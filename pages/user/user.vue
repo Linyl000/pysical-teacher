@@ -1,6 +1,7 @@
 s
 <template>
 	<view class="page">
+		<view class="teacher-img"></view>
 		<view class="teacher-info">
 			<image class="ava" :src="list.avatar"></image>
 			<view class="teacher-des">
@@ -67,25 +68,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+page,
 .page {
 	background-color: rgba(248, 248, 248, 1);
 }
+.teacher-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 750rpx;
+	height: 540rpx;
+	background-color: #8767f5;
+	border-radius: 0rpx 0rpx 32rpx 32rpx;
+}
 .teacher-info {
+	z-index: 100;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 750rpx;
-	height: 540rpx;
-	background-color: #8767f5;
-	border-radius: 0rpx 0rpx 32rpx 32rpx;
-
+	height: 500rpx;
 	.ava {
 		width: 140rpx;
 		height: 140rpx;
 		border: 6rpx solid #ffffff;
 		border-radius: 50%;
-		margin: 30rpx 0;
+		margin: 46rpx 0 30rpx;
 	}
 	.teacher-des {
 		color: #fff;
@@ -104,16 +113,13 @@ export default {
 	}
 }
 .section2 {
-	position: absolute;
-	left: 32rpx;
-	top: 488rpx;
 	width: 686rpx;
-	background: #ffffff;
 	border-radius: 16rpx;
-
-	// margin: 24rpx auto;
+	margin: 0rpx auto;
+	overflow: hidden;
 	/deep/.u-cell {
 		height: 110rpx;
+		background-color: #fff !important;
 		.u-line {
 			border: 0 !important;
 		}

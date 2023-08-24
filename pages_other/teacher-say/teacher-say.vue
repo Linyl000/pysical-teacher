@@ -1,7 +1,7 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
 		<div class="say-items" v-for="i in list" :key="i.userId">
-			<image class="ava" src="../../static/logout.png"></image>
+			<image class="ava" src="../../static/yonghu.png"></image>
 			<div class="text">
 				<div class="title">
 					<div class="name">匿名用户</div>
@@ -50,6 +50,7 @@ export default {
 		width: 80rpx;
 		height: 80rpx;
 		border-radius: 50%;
+		border: 6rpx solid #8c69f9;
 		margin: 0 20rpx;
 	}
 	.text {

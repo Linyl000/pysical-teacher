@@ -8,9 +8,19 @@
 				</template>
 			</u--input>
 		</view>
+		<!-- 		<u-radio-group v-model="value3" placement="row" size="24" labelSize="24">
+			<u-radio activeColor="#5d4fdc" label="男"></u-radio>
+			<u-radio activeColor="#5d4fdc" label="女"></u-radio>
+		</u-radio-group> -->
+
+		<u-checkbox-group v-model="checkboxValue1">
+			<u-checkbox shape="circle" activeColor="#5D4FDC" label="记住密码"></u-checkbox>
+		</u-checkbox-group>
+
 		<view class="button_1" @click="goIndex">登录</view>
 	</view>
 </template>
+
 <script>
 import { login } from '@/api/login.js';
 export default {
@@ -21,18 +31,36 @@ export default {
 			pwd: true,
 			codeUrl: null,
 			uuid: null,
-			captchaEnabled: null
+			captchaEnabled: null,
+			checkboxValue1: null
 		};
+	},
+	created() {
+		this.checkboxValue1 = uni.getStorageSync('Mremember') === undefined || uni.getStorageSync('Mremember') === true ? [''] : [];
+		if (this.checkboxValue1.length) {
+			this.username = uni.getStorageSync('username');
+			this.password = uni.getStorageSync('password');
+		}
 	},
 	methods: {
 		goIndex() {
 			if (!this.username || !this.password) {
 				uni.showToast({
 					duration: 2000,
-					title: '账号或密码不能为空',
+					title: '学号或密码不能为空',
 					icon: 'none'
 				});
 				return;
+			}
+			uni.removeStorageSync('token');
+			if (this.checkboxValue1.length > 0) {
+				uni.setStorageSync('Musername', this.username);
+				uni.setStorageSync('Mpassword', this.password);
+				uni.setStorageSync('Mremember', true);
+			} else {
+				uni.removeStorageSync('Musername');
+				uni.removeStorageSync('Mpassword');
+				uni.setStorageSync('Mremember', false);
 			}
 			login({ username: this.username, password: this.password }).then(res => {
 				if (res.code === 200) {
@@ -52,7 +80,6 @@ export default {
 	width: 630rpx;
 	margin: 40rpx 0 0 32rpx;
 	padding: 0 30rpx;
-	background-color: rgba(248, 248, 248, 1);
 	border-radius: 16rpx;
 	height: 120rpx;
 }
@@ -69,6 +96,19 @@ export default {
 	// background-color: #dfe1e5;
 	background-color: rgba(93, 79, 220, 1);
 }
+
+/deep/ .u-checkbox-group--row {
+	justify-content: flex-end;
+	margin-right: 40rpx;
+	margin-top: 20rpx;
+}
+/deep/.u-input {
+	height: 100%;
+}
+.login-code-img {
+	width: 200rpx;
+	height: 60rpx;
+}
 /deep/.u-radio-group {
 	flex: 0 !important;
 }
@@ -76,8 +116,5 @@ export default {
 	margin: 40rpx 130rpx 0;
 	justify-content: space-around;
 	height: 120rpx;
-}
-/deep/.u-input {
-	height: 100%;
 }
 </style>

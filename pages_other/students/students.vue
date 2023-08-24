@@ -8,7 +8,7 @@
 		style="background-color: #f8f8f8;"
 	>
 		<view class="search-box">
-			<u-search placeholder="搜索学生学号或姓名" v-model="keyword"></u-search>
+			<u-search placeholder="搜索学生学号或姓名" v-model="keyword" @search="getList(1, 10)" @custom="getList(1, 10)"></u-search>
 			<!-- <u-icon name="plus-circle" size="24" @click="goStudentAdd"></u-icon> -->
 		</view>
 		<div class="type">
@@ -22,7 +22,6 @@
 					{{ i.nickName }}
 				</div>
 				<div>{{ i.studentNo }}</div>
-				tv
 			</div>
 		</div>
 	</z-paging>

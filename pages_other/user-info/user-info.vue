@@ -9,26 +9,54 @@
 		<u--form labelPosition="left" :model="form" :rules="rules" ref="uForm" label-align="right">
 			<u-form-item prop="name" borderBottom label="姓名">
 				<view class="input_1">
-					<u--input placeholder="请输入真实姓名" v-model="form.nickName" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入真实姓名"
+						v-model="form.nickName"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
 			</u-form-item>
 			<u-form-item prop="name" borderBottom label="学校">
 				<view class="input_1">
-					<u--input placeholder="请输入您所在的学校" v-model="form.deptName" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入您所在的学校"
+						v-model="form.deptName"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
 			</u-form-item>
 			<u-form-item prop="name" borderBottom label="编号">
 				<view class="input_1">
-					<u--input placeholder="请输入您的编号" v-model="form.studentNo" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入您的编号"
+						v-model="form.studentNo"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
 			</u-form-item>
 			<u-form-item prop="phonenumber" borderBottom label="电话">
 				<view class="input_1">
-					<u--input placeholder="请输入您的联系电话" v-model="form.phonenumber" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入您的联系电话"
+						v-model="form.phonenumber"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
 			</u-form-item>
 			<u-form-item label="性别" prop="sex" borderBottom>
-				<u-radio-group v-model="form.sex" placement="row" size="24" labelSize="24" :disabled="true">
+				<u-radio-group v-model="form.sex" placement="row" size="24" labelSize="24" :disabledd="true">
 					<u-radio activeColor="#5d4fdc" label="男" name="0"></u-radio>
 					<u-radio activeColor="#5d4fdc" label="女" name="1"></u-radio>
 				</u-radio-group>

@@ -59,8 +59,7 @@ function getRequest(url, data) {
 				// 'user-token': uni.getStorageSync('userinfo').token
 			},
 			success: function(res) {
-				if (res.data.code === 401 || res.data
-					.code === 403) {
+				if (res.data.code === 401) {
 					uni.removeStorageSync('token')
 					uni.redirectTo({
 						url: '/pages/login/login'
@@ -98,8 +97,7 @@ function putRequest(url, data, heads) {
 				'Authorization': uni.getStorageSync('token')
 			},
 			success: function(res) {
-				if (res.data.code === 401 || res.data
-					.code === 403) {
+				if (res.data.code === 401) {
 					uni.removeStorageSync('token')
 					uni.redirectTo({
 						url: '/pages/login/login'
@@ -137,8 +135,7 @@ function delRequest(url, data) {
 				'Authorization': uni.getStorageSync('token')
 			},
 			success: function(res) {
-				if (res.data.code === 401 || res.data
-					.code === 403) {
+				if (res.data.code === 401) {
 					uni.removeStorageSync('token')
 					uni.redirectTo({
 						url: '/pages/login/login'

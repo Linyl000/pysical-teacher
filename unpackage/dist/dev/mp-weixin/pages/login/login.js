@@ -263,6 +263,10 @@ var _default = { data: function data() {return { username: 'tea001', password: '
           uni.switchTab({
             url: '/pages/index/index' });
 
+        } else if (res.code === 403) {
+          uni.switchTab({
+            url: '/pages/index/index' });
+
         }
       });
     } } };exports.default = _default;
