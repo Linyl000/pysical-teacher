@@ -24,14 +24,14 @@
 		</template>
 		<div class="type">
 			<div class="small-colum">
-				<div>时间</div>
-				<div>题目名称</div>
-				<div>成绩</div>
+				<div class="colum-tasktime">时间</div>
+				<div class="colum-taskname">题目名称</div>
+				<div class="colum-taskscore">成绩</div>
 			</div>
 			<div class="small-colum" v-for="i in list" :key="i.taskId">
-				<div>{{ i.endTime }}</div>
-				<div>{{ i.taskName }}</div>
-				<div v-if="i.finishStatus !== '0'">
+				<div class="colum-tasktime">{{ i.endTime | removeFirstFive | removeLastThree }}</div>
+				<div class="colum-taskname">{{ i.taskName }}</div>
+				<div class="colum-taskscore" v-if="i.finishStatus !== '0'">
 					<span class="score">{{ i.workScore === -1 ? '评分中' : i.workScore === -2 ? '成绩出错，请后台修改' : i.workScore }}</span>
 					<span v-if="i.workScore > -1" class="colums">分</span>
 				</div>
@@ -62,12 +62,28 @@ export default {
 			i: null
 		};
 	},
+	filters: {
+		removeFirstFive(value) {
+			if (typeof value === 'string' && value.length > 5) {
+				return value.slice(5);
+			} else {
+				return value;
+			}
+		},
+		removeLastThree(value) {
+			if (typeof value === 'string' && value.length > 3) {
+				return value.slice(0, -3);
+			} else {
+				return value;
+			}
+		}
+	},
 	onLoad(option) {
 		this.i = JSON.parse(option.i);
 	},
 	methods: {
-		getList() {
-			result({ studentId: this.i.userId, taskType: this.type })
+		getList(page, limit) {
+			result({ pageNum: page, pageSize: limit, studentId: this.i.userId, taskType: this.type })
 				.then(res => {
 					this.list = res.rows;
 					this.$refs.paging.complete(res.rows);
@@ -171,8 +187,26 @@ export default {
 		font-size: 28rpx;
 		color: #888888;
 		div {
-			width: 25%;
 			text-align: center;
+		}
+		.colum-tasktime {
+			width: 25%;
+		}
+		.colum-taskname {
+			width: 55%;
+
+			box-sizing: border-box;
+
+			padding: 0 10rpx;
+
+			white-space: nowrap;
+
+			overflow: hidden;
+
+			text-overflow: ellipsis;
+		}
+		.colum-taskscore {
+			width: 20%;
 		}
 		.score {
 			color: rgba(224, 105, 105, 1);
