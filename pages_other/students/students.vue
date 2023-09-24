@@ -97,21 +97,13 @@ export default {
 	.small-colum {
 		display: flex;
 		justify-content: space-between;
-		height: 80rpx;
-		line-height: 80rpx;
+		min-height: 80rpx;
 		font-size: 28rpx;
 		color: #888888;
+		line-height: 1.4;
 		div {
-			width: 25%;
+			width: 45%;
 			text-align: center;
-		}
-		.score {
-			color: rgba(224, 105, 105, 1);
-			font-size: 36rpx;
-		}
-		.colums {
-			color: rgba(224, 105, 105, 1);
-			font-size: 28rpx;
 		}
 	}
 }

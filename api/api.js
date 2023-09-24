@@ -1,7 +1,8 @@
 import vue from '@/main.js'
 
 
-const commoneUrl = "http://120.76.132.152:8091/wxapi"; //公共路径 
+const commoneUrl = "http://27.155.150.204:9100/wxapi"; //公共路径 
+// const commoneUrl = "http://120.76.132.152:8091/wxapi"; //公共路径 
 
 //post请求封装
 function postRequest(url, data) {

@@ -14,6 +14,7 @@ s
 		</view>
 		<div class="section2">
 			<u-cell-group>
+				<u-cell icon="lock" title="修改密码" :isLink="true" @click="goChangeMima"></u-cell>
 				<u-cell icon="../../../../../../../../../static/teachersay.png" title="教师评价" :isLink="true" @click="goTeacherSay"></u-cell>
 
 				<u-cell icon="../../../../../../../../../static/logout.png" title="退出" :isLink="true" @click="showByeBye = true"></u-cell>
@@ -50,6 +51,11 @@ export default {
 		getInfo() {
 			getInfo().then(res => {
 				this.list = res.user;
+			});
+		},
+		goChangeMima() {
+			uni.navigateTo({
+				url: '/pages_other/changeMima/changeMima'
 			});
 		},
 		logout() {

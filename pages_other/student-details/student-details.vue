@@ -8,7 +8,7 @@
 					<text lines="1" class="text_4">{{ i.studentNo }}</text>
 				</view>
 			</view>
-			<u-tabs
+			<!-- <u-tabs
 				lineColor="#5d4fdc"
 				:list="list1"
 				lineWidth="40"
@@ -20,7 +20,7 @@
 				}"
 				lineHeight="5"
 				@change="tabChange"
-			></u-tabs>
+			></u-tabs> -->
 		</template>
 		<div class="type">
 			<div class="small-colum">
@@ -32,10 +32,15 @@
 				<div class="colum-tasktime">{{ i.endTime | removeFirstFive | removeLastThree }}</div>
 				<div class="colum-taskname">{{ i.taskName }}</div>
 				<div class="colum-taskscore" v-if="i.finishStatus !== '0'">
-					<span class="score">{{ i.workScore === -1 ? '评分中' : i.workScore === -2 ? '成绩出错，请后台修改' : i.workScore }}</span>
-					<span v-if="i.workScore > -1" class="colums">分</span>
+					<!-- <span class="score">{{ i.workScore === -1 ? '评分中' : i.workScore === -2 ? '成绩出错，请后台修改' : i.workScore }}</span>
+					<span v-if="i.workScore > -1" class="colums">分</span> -->
+					<text class="score-1" v-if="i.workScore == -1">评分中</text>
+					<text class="score-3" v-else-if="i.workScore == -2">成绩出错，请后台修改</text>
+					<text class="score-1" v-else>{{ i.workScore }}</text>
+					<text v-if="i.workScore !== -1 && i.workScore !== -2" class="score-2">分</text>
 				</div>
 				<div v-else class="score">未完成</div>
+				<u-icon name="arrow-right" size="14" @click="goStudentAnswer(i)"></u-icon>
 			</div>
 		</div>
 		<template #bottom>
@@ -83,7 +88,7 @@ export default {
 	},
 	methods: {
 		getList(page, limit) {
-			result({ pageNum: page, pageSize: limit, studentId: this.i.userId, taskType: this.type })
+			result({ pageNum: page, pageSize: limit, studentId: this.i.userId })
 				.then(res => {
 					this.list = res.rows;
 					this.$refs.paging.complete(res.rows);
@@ -98,6 +103,11 @@ export default {
 		tabChange({ index }) {
 			this.type = index;
 			this.$refs.paging.reload();
+		},
+		goStudentAnswer(i) {
+			uni.navigateTo({
+				url: '/pages_other/studentAnswer/studentAnswer?examRecordId=' + i.id
+			});
 		}
 	}
 };
@@ -182,10 +192,11 @@ export default {
 	.small-colum {
 		display: flex;
 		justify-content: space-between;
-		height: 80rpx;
-		line-height: 80rpx;
+		align-items: center;
+		min-height: 80rpx;
 		font-size: 28rpx;
 		color: #888888;
+		line-height: 1.4;
 		div {
 			text-align: center;
 		}
@@ -193,28 +204,25 @@ export default {
 			width: 25%;
 		}
 		.colum-taskname {
-			width: 55%;
-
+			width: 48%;
 			box-sizing: border-box;
-
-			padding: 0 10rpx;
-
-			white-space: nowrap;
-
-			overflow: hidden;
-
-			text-overflow: ellipsis;
+			// padding: 0 10rpx;
+			// white-space: nowrap;
+			// overflow: hidden;
+			// text-overflow: ellipsis;
 		}
 		.colum-taskscore {
-			width: 20%;
-		}
-		.score {
+			width: 25%;
 			color: rgba(224, 105, 105, 1);
-			font-size: 36rpx;
 		}
-		.colums {
-			color: rgba(224, 105, 105, 1);
+		.score-1 {
+			font-size: 40rpx;
+		}
+		.score-2 {
 			font-size: 28rpx;
+		}
+		.score-3 {
+			font-size: 26rpx;
 		}
 	}
 }

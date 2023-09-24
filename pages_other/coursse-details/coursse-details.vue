@@ -1,9 +1,9 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
-		<view class="name">【{{ i.type === 0 ? '作业' : '考核' }}】{{ i.taskName }}</view>
+		<view class="name">{{ i.taskName }}</view>
 		<view class="people">{{ i.deptName }}({{ i.allNum }}人)</view>
 		<view class="chart-box">
-			<view class="completes">本次{{ i.type === 0 ? '作业' : '考核' }}完成率</view>
+			<view class="completes">完成率</view>
 			<div class="charts"><qiun-data-charts type="pie" :chartData="chartsDataPie1" :echartsH5="true" :echartsApp="true" /></div>
 			<view class="ok-number">{{ i.finishNum }}/{{ i.allNum }}人已完成</view>
 		</view>
@@ -27,16 +27,19 @@
 				<div>成绩</div>
 			</div>
 			<div class="small-colum" v-for="i in list" :key="i">
-				<div>
+				<div style="text-align: left;">
 					<image :src="i.avatar" style="width: 50rpx;height: 50rpx;vertical-align: middle;"></image>
 					{{ i.nickName }}
 				</div>
 				<div>{{ i.studentNo }}</div>
-				<div v-if="i.finishStatus !== '0'">
-					<span class="score">{{ i.workScore === -1 ? '评分中' : i.workScore === -2 ? '成绩出错，请后台修改' : i.workScore }}</span>
-					<span v-if="i.workScore > -1" class="colums">分</span>
+				<div v-if="i.finishStatus !== '0'" class="colum-taskscore">
+					<text class="score-1" v-if="i.workScore == -1">评分中</text>
+					<text class="score-3" v-else-if="i.workScore == -2">成绩出错，等待教师复核</text>
+					<text class="score-1" v-else>{{ i.workScore }}</text>
+					<text v-if="i.workScore !== -1 && i.workScore !== -2" class="score-2">分</text>
 				</div>
 				<div v-else class="score">未完成</div>
+				<u-icon name="arrow-right" size="14" @click="goStudentAnswer(i)"></u-icon>
 			</div>
 		</div>
 	</z-paging>
@@ -94,6 +97,11 @@ export default {
 		},
 		tabChange({ index }) {
 			this.$refs.paging.reload();
+		},
+		goStudentAnswer(i) {
+			uni.navigateTo({
+				url: '/pages_other/studentAnswer/studentAnswer?examRecordId=' + i.id
+			});
 		}
 	}
 };
@@ -109,7 +117,7 @@ export default {
 	margin: 22rpx 18rpx;
 }
 .people {
-	font-size: 36rpx;
+	font-size: 32rpx;
 	font-weight: 600;
 	margin: 0 18rpx 22rpx;
 }
@@ -161,21 +169,33 @@ export default {
 	.small-colum {
 		display: flex;
 		justify-content: space-between;
-		height: 80rpx;
+		align-items: center;
+		min-height: 80rpx;
 		line-height: 80rpx;
 		font-size: 28rpx;
 		color: #888888;
-		div {
+		line-height: 1.4;
+		text-align: center;
+		div:first-child {
+			width: 35%;
+		}
+		div:nth-child(2) {
+			width: 40%;
+		}
+		div:nth-child(3) {
 			width: 25%;
-			text-align: center;
 		}
-		.score {
+		.colum-taskscore {
 			color: rgba(224, 105, 105, 1);
-			font-size: 36rpx;
-		}
-		.colums {
-			color: rgba(224, 105, 105, 1);
-			font-size: 28rpx;
+			.score-1 {
+				font-size: 40rpx;
+			}
+			.score-2 {
+				font-size: 28rpx;
+			}
+			.score-3 {
+				font-size: 26rpx;
+			}
 		}
 	}
 }

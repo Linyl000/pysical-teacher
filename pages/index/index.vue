@@ -22,7 +22,7 @@
 				<text lines="1" style="font-weight: 600;">学生管理</text>
 			</view>
 		</view>
-		<u-tabs
+		<!-- <u-tabs
 			lineColor="#5d4fdc"
 			:list="list1"
 			lineWidth="40"
@@ -34,10 +34,10 @@
 			}"
 			lineHeight="5"
 			@change="tabChange"
-		></u-tabs>
+		></u-tabs> -->
 		<view class="list-item" v-for="(item, index) in list" :key="item.id" @click="goCourseDetails(item)">
 			<div class="top">
-				<view lines="1" style="font-weight: 600;">{{ item.taskName }}</view>
+				<view class="left-title">{{ item.taskName }}</view>
 				<view class="right-score">
 					<text>完成率：</text>
 					<text style="color: #e57d7d;">{{ item.finishRate }}</text>
@@ -54,6 +54,7 @@
 <script>
 import { getInfo } from '@/api/user.js';
 import { workList } from '@/api/index.js';
+import { mapGetters, mapMutations, mapState } from 'vuex';
 export default {
 	data() {
 		return {
@@ -74,8 +75,9 @@ export default {
 		this.getInfo();
 	},
 	methods: {
+		...mapMutations(['updateUserInfo']),
 		getList(page, limit) {
-			workList({ pageNum: page, pageSize: limit, taskType: this.type })
+			workList({ pageNum: page, pageSize: limit })
 				.then(res => {
 					this.list = res.rows;
 					this.$refs.paging.complete(res.rows);
@@ -87,6 +89,8 @@ export default {
 		getInfo() {
 			getInfo().then(res => {
 				this.user = res.user;
+				uni.setStorageSync('userInfo', res.user);
+				this.updateUserInfo();
 			});
 		},
 		goColleges() {
@@ -166,7 +170,7 @@ export default {
 	flex-direction: column;
 	justify-content: space-between;
 	width: 660rpx;
-	height: 120rpx;
+	min-height: 120rpx;
 	background-color: rgba(255, 255, 255, 1);
 	border-radius: 16rpx;
 	margin: 6rpx auto 20rpx;
@@ -177,9 +181,16 @@ export default {
 	justify-content: space-between;
 
 	.left-title {
-		flex: 1;
-		font-size: 34rpx;
+		width: 500rpx;
+		font-size: 32rpx;
 		font-weight: 600;
+		// white-space: nowrap;
+		// overflow: hidden;
+		// text-overflow: ellipsis;
+	}
+	.right-score {
+		font-size: 30rpx;
+		width: 240rpx;
 	}
 }
 </style>

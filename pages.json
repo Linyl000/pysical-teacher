@@ -91,6 +91,24 @@
                 }
                 
                 }
+                ,{
+                    "path" : "studentAnswer/studentAnswer",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "changeMima/changeMima",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 	}],
 	"tabBar": {
