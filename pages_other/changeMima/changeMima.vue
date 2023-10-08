@@ -1,12 +1,12 @@
 <template>
 	<view class="page">
-		<view class="input_1">
+		<!-- <view class="input_1">
 			<u--input placeholder="请输入原密码" v-model="username" border="none" fontSize="18" :password="usa">
 				<template slot="suffix">
 					<u-icon :name="usa ? 'eye-off' : 'eye'" size="33" @click="usa = !usa"></u-icon>
 				</template>
 			</u--input>
-		</view>
+		</view> -->
 		<view class="input_1">
 			<u--input placeholder="请输入新密码" v-model="password" border="none" fontSize="18" :password="pwd">
 				<template slot="suffix">
@@ -37,7 +37,7 @@ export default {
 	},
 	methods: {
 		resetPwd() {
-			if (!this.username || !this.password) {
+			if (!this.password) {
 				uni.showToast({
 					duration: 2000,
 					title: '密码输入不能为空',

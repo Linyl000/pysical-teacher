@@ -68,6 +68,12 @@ export default {
 					uni.switchTab({
 						url: '/pages/index/index'
 					});
+				} else {
+					uni.showToast({
+						duration: 2000,
+						title: res.msg,
+						icon: 'none'
+					});
 				}
 			});
 		}
