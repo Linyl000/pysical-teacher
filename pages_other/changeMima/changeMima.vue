@@ -10,11 +10,11 @@
 		<view class="input_1">
 			<u--input placeholder="请输入新密码" v-model="password" border="none" fontSize="18" :password="pwd">
 				<template slot="suffix">
-					<u-icon :name="pwd ? 'eye-off' : 'eye'" size="33" @click="pwd = !pwd"></u-icon>
+					<u-icon color="#ccc" :name="pwd ? 'eye-off' : 'eye'" size="33" @click="pwd = !pwd"></u-icon>
 				</template>
 			</u--input>
 		</view>
-		<view class="button_1" @click="resetPwd">确认修改</view>
+		<view :class="colorBtn ? 'button_1' : 'button_2'" @click="resetPwd">确认修改</view>
 	</view>
 </template>
 
@@ -33,7 +33,10 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(['userInfo'])
+		...mapState(['userInfo']),
+		colorBtn() {
+			return this.password !== '';
+		}
 	},
 	methods: {
 		resetPwd() {
@@ -78,7 +81,8 @@ export default {
 	border-radius: 16rpx;
 	height: 120rpx;
 }
-.button_1 {
+.button_1,
+.button_2 {
 	border-radius: 48rpx;
 	width: 448rpx;
 	height: 96rpx;
@@ -88,10 +92,11 @@ export default {
 	text-align: center;
 	line-height: 96rpx;
 	color: rgba(255, 255, 255, 1);
-	// background-color: #dfe1e5;
 	background-color: rgba(93, 79, 220, 1);
 }
-
+.button_2 {
+	background-color: #a7adbc;
+}
 /deep/ .u-checkbox-group--row {
 	justify-content: flex-end;
 	margin-right: 40rpx;

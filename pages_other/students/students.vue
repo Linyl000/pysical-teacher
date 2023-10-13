@@ -71,6 +71,18 @@ export default {
 	justify-content: space-between;
 	margin: 36rpx 0 0 32rpx;
 }
+/deep/ .u-search__content {
+	border: 4rpx solid #c1c8d8 !important;
+	border-radius: 10rpx !important;
+}
+/deep/.u-search__action {
+	background-color: #5d4fdc;
+	border: 4rpx solid #5d4fdc;
+	border-radius: 10rpx;
+	color: #fff;
+	height: 64rpx;
+	line-height: 64rpx;
+}
 .type {
 	width: 718rpx;
 	background: #ffffff;

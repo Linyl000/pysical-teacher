@@ -21,6 +21,10 @@
 				lineHeight="5"
 				@change="tabChange"
 			></u-tabs> -->
+			<view class="course-des-box">
+				<view class="block_3"></view>
+				<text lines="1" class="text_7">作业状况</text>
+			</view>
 		</template>
 		<div class="type">
 			<div class="small-colum">
@@ -106,7 +110,7 @@ export default {
 		},
 		goStudentAnswer(i) {
 			uni.navigateTo({
-				url: '/pages_other/studentAnswer/studentAnswer?examRecordId=' + i.id
+				url: '/pages_other/studentAnswer/studentAnswer?student=' + JSON.stringify(i)
 			});
 		}
 	}
@@ -171,7 +175,7 @@ export default {
 	background: #ffffff;
 	box-shadow: 0rpx 0rpx 8rpx 0rpx rgba(0, 0, 0, 0.1);
 	border-radius: 16rpx;
-	padding: 32rpx;
+	padding: 30rpx;
 	box-sizing: border-box;
 	margin: 16rpx auto;
 	.title {
@@ -201,10 +205,10 @@ export default {
 			text-align: center;
 		}
 		.colum-tasktime {
-			width: 25%;
+			width: 27%;
 		}
 		.colum-taskname {
-			width: 48%;
+			width: 46%;
 			box-sizing: border-box;
 			// padding: 0 10rpx;
 			// white-space: nowrap;

@@ -100,7 +100,7 @@ export default {
 		},
 		goStudentAnswer(i) {
 			uni.navigateTo({
-				url: '/pages_other/studentAnswer/studentAnswer?examRecordId=' + i.id
+				url: '/pages_other/studentAnswer/studentAnswer?student=' + JSON.stringify(i)
 			});
 		}
 	}
@@ -122,24 +122,29 @@ export default {
 	margin: 0 18rpx 22rpx;
 }
 .chart-box {
+	position: relative;
 	display: flex;
 	flex-direction: column;
-	height: 596rpx;
-	width: 630rpx;
+	// height: 596rpx;
+	width: 670rpx;
 	background-color: rgb(255, 255, 255);
 	border-radius: 32rpx;
-	margin: 16rpx auto;
+	margin: auto;
 	padding: 24rpx;
 	font-weight: 600;
 	.completes {
+		position: absolute;
+		top: 24rpx;
+		left: 24rpx;
 	}
 	.charts {
-		width: 450rpx;
-		height: 450rpx;
-		margin: 26rpx auto;
+		width: 470rpx;
+		height: 470rpx;
+		margin: 0 auto;
 		// background-color: pink;
 	}
 	.ok-number {
+		margin-top: 20rpx;
 		text-align: center;
 	}
 }

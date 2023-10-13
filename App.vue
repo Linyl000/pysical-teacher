@@ -136,4 +136,26 @@ export default {
 	padding: 20rpx;
 	padding-bottom: 0 !important;
 }
+//紫+字
+.course-des-box {
+	height: 40rpx;
+	flex-direction: row;
+	display: flex;
+	margin: 26rpx 32rpx;
+
+	.block_3 {
+		background-color: rgba(93, 79, 220, 1);
+		border-radius: 8rpx;
+		width: 16rpx;
+		height: 46rpx;
+		margin-top: 2rpx;
+		display: flex;
+		flex-direction: column;
+	}
+	.text_7 {
+		margin-left: 10rpx;
+		font-weight: 600;
+		font-size: 34rpx;
+	}
+}
 </style>

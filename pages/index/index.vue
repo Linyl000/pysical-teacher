@@ -7,7 +7,6 @@
 				<text lines="1" style="font-size: 32rpx;">老师</text>
 			</view>
 		</template>
-		<!-- 		<view class="search-box"><u-search placeholder="搜索课程成绩" v-model="keyword"></u-search></view> -->
 		<view class="options">
 			<!-- <view class="options-item">
 				<div class="icon" :style="{ backgroundColor: '#1678fc' }"><u-icon name="order" color="#fff" size="28"></u-icon></div>
@@ -35,6 +34,10 @@
 			lineHeight="5"
 			@change="tabChange"
 		></u-tabs> -->
+		<view class="course-des-box">
+			<view class="block_3"></view>
+			<text lines="1" class="text_7">作业状况</text>
+		</view>
 		<view class="list-item" v-for="(item, index) in list" :key="item.id" @click="goCourseDetails(item)">
 			<div class="top">
 				<view class="left-title">{{ item.taskName }}</view>
@@ -174,7 +177,7 @@ export default {
 	background-color: rgba(255, 255, 255, 1);
 	border-radius: 16rpx;
 	margin: 6rpx auto 20rpx;
-	padding: 26rpx 28rpx;
+	padding: 36rpx 28rpx;
 }
 .top {
 	display: flex;

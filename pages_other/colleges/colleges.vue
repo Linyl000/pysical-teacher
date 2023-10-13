@@ -7,11 +7,16 @@
 		class="page"
 		style="background-color: #f8f8f8;"
 	>
+		<view class="course-des-box">
+			<view class="block_3"></view>
+			<text lines="1" class="text_7">全部学院</text>
+		</view>
+		<!-- icon="../../../../../../../../../static/teachersay.png" -->
 		<u-cell-group>
 			<u-cell
 				v-for="i in list"
 				:key="i.deptId"
-				icon="../../../../../../../../../static/teachersay.png"
+				icon="chat"
 				:title="i.deptName"
 				:label="i.orderNum + '人'"
 				:isLink="true"
@@ -50,6 +55,11 @@ export default {
 </script>
 
 <style lang="scss">
+/deep/.u-cell-group__wrapper {
+	.u-line {
+		border: 0 !important;
+	}
+}
 /deep/.u-cell {
 	.u-cell__body {
 		width: 686rpx;
@@ -80,5 +90,25 @@ export default {
 			font-size: 52rpx !important;
 		}
 	}
+}
+.course-des-box {
+	height: 40rpx;
+	flex-direction: row;
+	display: flex;
+	margin: 26rpx 32rpx;
+}
+.block_3 {
+	background-color: rgba(93, 79, 220, 1);
+	border-radius: 8rpx;
+	width: 16rpx;
+	height: 46rpx;
+	margin-top: 2rpx;
+	display: flex;
+	flex-direction: column;
+}
+.text_7 {
+	margin-left: 10rpx;
+	font-weight: 600;
+	font-size: 34rpx;
 }
 </style>

@@ -1,8 +1,8 @@
 {
 	"pages": [{
-			"path": "pages/index/index",
+			"path": "pages/loginBefore/loginBefore",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "登录"
 				// "onReachBottomDistance": 150,  上拉加载更多 和onReachBottom()配套使用
 				// "enablePullDownRefresh": true,  下拉刷新 和onPullDownRefresh()配套使用
 			}
@@ -18,6 +18,13 @@
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
 				"enablePullDownRefresh": false
 			}
 
@@ -63,45 +70,44 @@
 					"enablePullDownRefresh": false
 				}
 
+			}, {
+				"path": "student-add/student-add",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "college-detail/college-detail",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "user-info/user-info",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "studentAnswer/studentAnswer",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "changeMima/changeMima",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
 			}
 		    ,{
-                    "path" : "student-add/student-add",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "college-detail/college-detail",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "user-info/user-info",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "studentAnswer/studentAnswer",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "changeMima/changeMima",
+                    "path" : "video-details/video-details",
                     "style" :                                                                                    
                 {
                     "navigationBarTitleText": "",
