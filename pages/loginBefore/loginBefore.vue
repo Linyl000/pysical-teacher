@@ -5,17 +5,17 @@
 			class="image_2"
 		></image>
 		<view class="group_3">
-			<text lines="1" class="text_3">智能体育平台</text>
+			<text lines="1" class="text_3">智慧体育平台</text>
 			<view class="tag_1"><text lines="1" class="text_4">教师端</text></view>
 		</view>
-		<text lines="1" decode="true" class="text_5">福州师范大学体育课程服务平台&nbsp;&nbsp;</text>
+		<text lines="1" decode="true" class="text_5">福建师范大学体育课程服务平台&nbsp;&nbsp;</text>
 		<view class="button_1" @click="goFirstInfo"><text lines="1" class="text_6">账号密码登录</text></view>
 		<view class="image-text_3">
 			<u-checkbox-group v-model="checkboxValue1"><u-checkbox shape="circle" label=" " activeColor="#5D4FDC"></u-checkbox></u-checkbox-group>
 			<view class="text-group_1">
 				<text>请认真阅读</text>
-				<text style="color:#5D4FDC;">用户协议，</text>
-				<text style="color:#5D4FDC;">隐私协议</text>
+				<text style="color:#5D4FDC;" @click="goUserProtocol">用户协议，</text>
+				<text style="color:#5D4FDC;" @click="goPrivacyProtocol">隐私协议</text>
 				<text>后登录</text>
 			</view>
 		</view>
@@ -32,6 +32,8 @@ export default {
 		return { checkboxValue1: [''] };
 	},
 	methods: {
+		goUserProtocol() {},
+		goPrivacyProtocol() {},
 		goFirstInfo() {
 			if (!this.checkboxValue1.length) {
 				uni.showToast({

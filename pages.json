@@ -115,6 +115,24 @@
                 }
                 
                 }
+                ,{
+                    "path" : "user-protocol/user-protocol",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "privacy-protocol/privacy-protocol",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 	}],
 	"tabBar": {
