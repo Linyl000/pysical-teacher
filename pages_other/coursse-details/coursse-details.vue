@@ -84,9 +84,9 @@ export default {
 		};
 	},
 	methods: {
-		getList(pageNo, pageSize) {
+		getList(page, limit) {
 			this.type = this.type === 1 ? 0 : 1;
-			teacherSelectStuWork({ taskId: this.i.id, deptId: this.i.deptId, finishStatus: this.type })
+			teacherSelectStuWork({ taskId: this.i.id, deptId: this.i.deptId, finishStatus: this.type, pageNum: page, pageSize: limit })
 				.then(res => {
 					this.list = res.data;
 					this.$refs.paging.complete(res.data);

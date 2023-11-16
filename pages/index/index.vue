@@ -1,5 +1,5 @@
 <template>
-	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
+	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page" :default-page-size="15">
 		<template #top>
 			<view class="hello">
 				<text lines="1">Hello，</text>
@@ -38,7 +38,7 @@
 			<view class="block_3"></view>
 			<text lines="1" class="text_7">作业状况</text>
 		</view>
-		<view class="list-item" v-for="(item, index) in list" :key="item.id" @click="goCourseDetails(item)">
+		<view class="list-item" v-for="(item, index) in list" :key="index" @click="goCourseDetails(item)">
 			<div class="top">
 				<view class="left-title">{{ item.taskName }}</view>
 				<view class="right-score">

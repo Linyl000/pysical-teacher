@@ -6,6 +6,7 @@
 		@query="getList"
 		class="page"
 		style="background-color: #f8f8f8;"
+		:default-page-size="20"
 	>
 		<view class="search-box">
 			<u-search placeholder="搜索学生学号或姓名" v-model="keyword" @search="getList(1, 10)" @custom="getList(1, 10)"></u-search>
@@ -35,14 +36,13 @@ export default {
 	},
 	onLoad(option) {
 		this.i = option.i ? JSON.parse(option.i) : '';
-		console.log(this.i);
 	},
 	methods: {
-		getList(pageNo, pageSize) {
-			deptStuList({ deptId: this.i.deptId ? this.i.deptId : '', keyword: this.keyword })
+		getList(page, limit) {
+			deptStuList({ deptId: this.i.deptId ? this.i.deptId : '', keyword: this.keyword, pageNum: page, pageSize: limit })
 				.then(res => {
-					this.list = res.data;
-					this.$refs.paging.complete(res.data);
+					this.list = res.rows;
+					this.$refs.paging.complete(res.rows);
 				})
 				.catch(res => {
 					this.$refs.paging.complete(false);

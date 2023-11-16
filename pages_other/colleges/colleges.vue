@@ -6,13 +6,13 @@
 		@query="getList"
 		class="page"
 		style="background-color: #f8f8f8;"
+		:default-page-size="15"
 	>
 		<view class="course-des-box">
 			<view class="block_3"></view>
 			<text lines="1" class="text_7">全部学院</text>
 		</view>
-		<!-- icon="../../../../../../../../../static/teachersay.png" -->
-		<u-cell-group>
+		<!-- <u-cell-group>
 			<u-cell
 				v-for="i in list"
 				:key="i.deptId"
@@ -22,7 +22,15 @@
 				:isLink="true"
 				@click="goStudents(i)"
 			></u-cell>
-		</u-cell-group>
+		</u-cell-group> -->
+		<div class="depts" v-for="i in list" :key="i.deptId">
+			<u-icon name="man-add" color="#666" size="38"></u-icon>
+			<div class="name">
+				<div class="big">{{ i.deptName }}</div>
+				<div class="small">{{ i.orderNum + '人' }}</div>
+			</div>
+			<u-icon name="arrow-right" color="#666" size="24" @click="goStudents(i)"></u-icon>
+		</div>
 	</z-paging>
 </template>
 
@@ -35,11 +43,11 @@ export default {
 		};
 	},
 	methods: {
-		getList() {
-			dept()
+		getList(page, limit) {
+			dept({ pageNum: page, pageSize: limit })
 				.then(res => {
-					this.list = res.data;
-					this.$refs.paging.complete(res.data);
+					this.list = res.rows;
+					this.$refs.paging.complete(res.rows);
 				})
 				.catch(res => {
 					this.$refs.paging.complete(false);
@@ -110,5 +118,24 @@ export default {
 	margin-left: 10rpx;
 	font-weight: 600;
 	font-size: 34rpx;
+}
+.depts {
+	display: flex;
+	background-color: #ffffff;
+	border-radius: 20rpx;
+	margin: 0 20rpx 24rpx;
+	padding: 20rpx;
+	.name {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		.big {
+			font-size: 38rpx;
+			font-weight: 600;
+		}
+		.small {
+			font-size: 32rpx;
+		}
+	}
 }
 </style>

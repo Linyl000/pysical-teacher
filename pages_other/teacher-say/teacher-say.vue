@@ -25,8 +25,8 @@ export default {
 		};
 	},
 	methods: {
-		getList(pageNo, pageSize) {
-			evaluate()
+		getList(page, limit) {
+			evaluate({ pageNum: page, pageSize: limit })
 				.then(res => {
 					this.list = res.data;
 					this.$refs.paging.complete(res.data);
