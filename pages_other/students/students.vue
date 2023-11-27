@@ -7,6 +7,8 @@
 		class="page"
 		style="background-color: #f8f8f8;"
 		:default-page-size="20"
+		use-cache
+		cache-key="list"
 	>
 		<view class="search-box">
 			<u-search placeholder="搜索学生学号或姓名" v-model="keyword" @search="getList(1, 10)" @custom="getList(1, 10)"></u-search>

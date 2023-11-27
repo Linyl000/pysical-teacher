@@ -7,6 +7,7 @@
 					<text lines="1" class="text_3">{{ i.nickName }}</text>
 					<text lines="1" class="text_4">{{ i.studentNo }}</text>
 				</view>
+				<span style="color: #a27dff;" @click="goStudyRecords">历史学习></span>
 			</view>
 			<!-- <u-tabs
 				lineColor="#5d4fdc"
@@ -103,6 +104,11 @@ export default {
 		},
 		goBack() {
 			uni.navigateBack({});
+		},
+		goStudyRecords() {
+			uni.navigateTo({
+				url: '/pages_other/study-records/study-records?userId=' + this.i.userId
+			});
 		},
 		tabChange({ index }) {
 			this.type = index;
